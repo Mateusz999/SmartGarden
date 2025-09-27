@@ -24,5 +24,7 @@ void init_params(int value,int time){
     timer_setting = time;
     pinMode(RELAY_MODULE,OUTPUT);
     digitalWrite(RELAY_MODULE, HIGH);
+    pinMode(SOIL_MOISTURE_SENSOR, INPUT);
+
 
 }
