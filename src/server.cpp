@@ -56,10 +56,14 @@ client.println("<div class='card'><span class='label'>🌱 Wilgotność gleby</s
 client.println("<div class='card'><span class='label'>🎛️ Czułość wilgotności</span><span class='value'>" + String(soil_moisture_sensitivity) + " %</span></div>");
 client.println("<div class='card'><span class='label'>⏱️ Timer przekaźnika</span><span class='value'>" + String(timer_setting) + " sek</span></div>");
 client.println("<div class='card'><span class='label'>🔌 Przekaźnik</span><span class='value'>" + String(relay_module_state == LOW ? "WŁĄCZONY" : "WYŁĄCZONY") + "</span></div>");
-client.println("<form method='GET' style='text-align:center; margin-top:30px;'>");
-client.println("<button name='relay' value='on' style='background:#00cc66; color:white; border:none; padding:15px 30px; font-size:1em; border-radius:8px; margin-right:10px;'>Włącz przekaźnik</button>");
-client.println("<button name='relay' value='off' style='background:#cc0033; color:white; border:none; padding:15px 30px; font-size:1em; border-radius:8px;'>Wyłącz przekaźnik</button>");
+client.println("<div style='display: flex; justify-content: center; gap: 20px; margin-top: 30px;'>");
+client.println("<form method='GET'>");
+client.println("<button name='relay' value='on' style='background:#00cc66; color:white; border:none; padding:12px 24px; font-size:0.95em; border-radius:10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); cursor:pointer;'>Włącz</button>");
 client.println("</form>");
+client.println("<form method='GET'>");
+client.println("<button name='relay' value='off' style='background:#cc0033; color:white; border:none; padding:12px 24px; font-size:0.95em; border-radius:10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); cursor:pointer;'>Wyłącz</button>");
+client.println("</form>");
+client.println("</div>");
 client.println("</div>");
 client.println("</body></html>");
 
