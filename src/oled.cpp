@@ -5,7 +5,7 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SH1106.h>
-#include "lib/config.h"
+
 
 Adafruit_SH1106 display(OLED_SDA, OLED_SCL);
 
@@ -25,7 +25,7 @@ void initOLED() {
   display.display();
 }
 
-void updateData(float temp, float humidity, int button_ok, int button_back, int button_menu) {
+void updateData(float temp, float humidity, int button_ok, int button_back, int button_menu,int soil_moi_val) {
   display.clearDisplay();
   display.setTextColor(WHITE);
   display.setTextSize(1);
@@ -34,8 +34,9 @@ void updateData(float temp, float humidity, int button_ok, int button_back, int 
   display.setCursor(0, 14);
   display.println("Wilgotnosc: " + String(humidity) + " %");
   display.setCursor(0, 28);
-  display.println("czulosc:" +String(soil_moisture_sensitivity));
-  display.println("czasowka:" +String(timer_setting));
+  display.println("Gleba:" +String(soil_moi_val)+" %");
+  display.println("czulosc:" +String(soil_moisture_sensitivity)+" %");
+  display.println("czasowka:" +String(timer_setting)+" sek");
   display.display();
 }
 

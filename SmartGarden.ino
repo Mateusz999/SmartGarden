@@ -4,12 +4,18 @@
 #include "lib/oled.h"
 #include "lib/buttons.h"
 #include "lib/display_modes.h"
+#include "lib/soil_moisture.h"
+#include <WiFi.h>
+#include "lib/Server.h"
+#include "lib/secrets.h"
 
 float temp = 22.0;
 float humidity = 34.0;
+int soil_moi_val = 100;
 int button_ok = 0;
 int button_back = 0;
 int button_menu = 0;
+int relay_module_state;
 DisplayMode current_display_mode = MODE_DATA;
 int selectedMenuIndex = 0;
 
@@ -21,16 +27,36 @@ void setup() {
   initOLED();
   init_buttons();
   init_params(50,30);
+  WiFi.begin(SSID,passwd);
+    while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+
+    Serial.println("\nPołączono z WiFi!");
+  Serial.print("IP: ");
+  Serial.println(WiFi.localIP());
+
+  startServer();
 }
 
 void loop() {
+  handleClient();
   button_ok = digitalRead(BUTTON_OK);
   button_back = digitalRead(BUTTON_BACK);
   button_menu = digitalRead(BUTTON_MENU);
+ // relay_module_state = digitalRead(RELAY_MODULE);
 
   temp = readTemperature();
   humidity = readHumidity();
+ soil_moi_val = soil_moisture_percentage();
 
+//  if(soil_moi_val < soil_moisture_sensitivity){
+//   digitalWrite(RELAY_MODULE,LOW);
+//  } else{
+//   digitalWrite(RELAY_MODULE,HIGH);
+
+//  }
   if (button_back == LOW) {
     current_display_mode = MODE_DATA;
     delay(300);
@@ -49,7 +75,7 @@ void loop() {
         settingMenu();
         delay(300);
       } else {
-        updateData(temp, humidity, button_ok, button_back, button_menu);
+        updateData(temp, humidity, button_ok, button_back, button_menu,soil_moi_val);
       }
       break;
 
